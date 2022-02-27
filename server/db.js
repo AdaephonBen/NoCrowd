@@ -55,7 +55,7 @@ const getStatus = async (email, orderid) => {
 
 const getOrders = async () => {
   const res1 = await pool.query(
-    'SELECT b.id AS id, a.name AS name, b.quantity AS quantity, b.status AS status FROM public."Item" AS a, public."Order" AS b WHERE a.id=b.item_id and caterer_id=1'
+    'SELECT b.id AS id, a.name AS name, b.quantity AS quantity, b.status AS status FROM public."Item" AS a, public."Order" AS b WHERE a.id=b.item_id and b.caterer_id=1'
   );
   return res1.rows;
 };

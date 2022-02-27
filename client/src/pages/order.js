@@ -31,13 +31,17 @@ export default function Order({ setOrderid, sgr }) {
   const [googleResponse, setGoogleResponse] = useState({});
   if (Object.keys(googleResponse).length === 0) {
     return (
-      <GoogleLogin
-        clientId="1088298445038-r77cabomgatt7t9nubrdpfc9oggqnkah.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={(response) => setGoogleResponse(response)}
-        onFailure={setGoogleResponse}
-        cookiePolicy={"single_host_origin"}
-      />
+      <Container>
+        <Flex alignItems="center" justifyContent="center" margin="30px">
+          <GoogleLogin
+            clientId="1088298445038-r77cabomgatt7t9nubrdpfc9oggqnkah.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={(response) => setGoogleResponse(response)}
+            onFailure={setGoogleResponse}
+            cookiePolicy={"single_host_origin"}
+          />
+        </Flex>
+      </Container>
     );
   } else {
     sgr(googleResponse);

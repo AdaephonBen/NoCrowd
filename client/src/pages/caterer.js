@@ -33,8 +33,10 @@ function Caterer() {
     useEffect(() => {
         const getInfo = async ()=>{
             const res = await axios.post('http://localhost:8000/caterer',{
-                id: localStorage.getItem('google').tokenId
+                idToken: JSON.parse(localStorage.getItem('google')).tokenId
             });
+            console.log("here");
+            console.log(res)
             setOrders(res.data);
         }
         getInfo();

@@ -44,6 +44,7 @@ export default function Confirm({ googleResponse }) {
       clearInterval(intervalRef.current);
     };
   }, []);
+  const [paymentDone, setPaymentDone] = useState(false);
   const initiatePayment = () => {
     let amount = 0;
     statusInfo.forEach((order) => {
@@ -55,19 +56,18 @@ export default function Confirm({ googleResponse }) {
       key: "rzp_test_Qb1YzJI1e6Wg6n", // Enter the Key ID generated from the Dashboard
       amount: amount,
       currency: "INR",
-      name: "Acme Corp",
+      name: "Prism Caterers",
       description: "Test Transaction",
       image: "https://example.com/your_logo",
       order_id: rid,
       handler: function (response) {
-        setRid(0);
+        setPaymentDone(true);
         const oldStatus = statusInfo;
         oldStatus.map((order) => {
-          console.log("Hello");
           order.status = "Payment Received";
         });
-        console.log(oldStatus);
         setStatusInfo(oldStatus);
+        window.location.href = "http://localhost:3000/done";
       },
       prefill: {
         name: "Piyush Garg",
@@ -96,6 +96,18 @@ export default function Confirm({ googleResponse }) {
 
     rzp1.open();
   };
+  useEffect(() => {
+    const setStatus = async () => {
+      statusInfo.map(async (order) => {
+        console.log(order);
+        await axios.post("http://localhost:8000/setstatus", {
+          idToken: tokenId,
+          order_id: order.orderid,
+        });
+      });
+    };
+    if (paymentDone) setStatus();
+  }, [paymentDone]);
   console.log(statusInfo);
   return (
     <Container>

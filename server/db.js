@@ -47,7 +47,7 @@ const getStatus = async (email, orderid) => {
   console.log(userid);
   console.log(orderid);
   const res1 = await pool.query(
-    `SELECT a.name AS Item, b.quantity, b.status FROM public."Item" as a, public."Order" AS b WHERE b.user_id=$1 and (b.status='ordered' or b.status='confirmed') and a.id=b.item_id and b.id=$2`,
+    `SELECT b.id as orderid, a.name AS Item, b.quantity as quantity, b.status as status FROM public."Item" as a, public."Order" AS b WHERE b.user_id=$1 and (b.status='ordered' or b.status='confirmed' or b.status='payment received') and a.id=b.item_id and b.id=$2`,
     [userid, orderid]
   );
   return res1.rows[0];
@@ -57,6 +57,7 @@ const getOrders = async () => {
   const res1 = await pool.query(
     'SELECT b.id AS id, a.name AS name, b.quantity AS quantity, b.status AS status FROM public."Item" AS a, public."Order" AS b WHERE a.id=b.item_id and b.caterer_id=1'
   );
+  console.log(res1.rows);
   return res1.rows;
 };
 
@@ -74,6 +75,13 @@ const setOrderCancelled = async (order_id) => {
   );
 };
 
+const setStatus = async (order_id) => {
+  const res = await pool.query(
+    `UPDATE public."Order" SET status='payment received' WHERE id=$1`,
+    [order_id]
+  );
+};
+
 module.exports = {
   getItems,
   placeOrder,
@@ -81,4 +89,5 @@ module.exports = {
   getOrders,
   setOrderCancelled,
   setOrderConfirmed,
+  setStatus,
 };

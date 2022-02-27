@@ -38,7 +38,6 @@ router.post("/status", async (req, res) => {
   let allOrdered = true;
   let totalPrice = 0;
   for (const order of orderstatus) {
-    console.log(order.quantity);
     totalPrice += 50 * order.quantity;
     if (order["status"] !== "confirmed") {
       allOrdered = false;
@@ -67,8 +66,14 @@ router.post("/status", async (req, res) => {
   res.send({ orderstatus, rid });
 });
 
+router.post("/setstatus", async (req, res) => {
+  console.log("h");
+  console.log(req.body.order_id);
+  await db.setStatus(req.body.order_id);
+});
+
 router.post("/caterer", async (req, res) => {
-  return await db.getOrders();
+  res.send(await db.getOrders());
 });
 
 router.post("/confirm", async (req, res) => {

@@ -6,6 +6,7 @@ import OrderConfirmation from "./pages/order_confirmation";
 import Caterer from "./pages/caterer";
 import react, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Done from "./pages/done";
 
 function App() {
   const [orderid, setOrderid] = useState([]);
@@ -25,10 +26,8 @@ function App() {
             path="/confirm"
             element={<OrderConfirmation googleResponse={googleResponse} />}
           />
-          <Route
-            path="/caterer"
-            element={<Caterer />}
-          />
+          <Route path="/caterer" element={<Caterer />} />
+          <Route path="/done" element={<Done />} />
         </Routes>
       </BrowserRouter>
     </div>

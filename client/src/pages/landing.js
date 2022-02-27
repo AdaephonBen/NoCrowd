@@ -24,12 +24,17 @@ export default function CallToActionWithIllustration() {
           fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
           lineHeight={"110%"}
         >
-          Canteen orders{" "}
+          Be ahead of{" "}
           <Text as={"span"} color={"orange.400"}>
-            made easy
+            the crowd
           </Text>
         </Heading>
-        <Text color={"gray.500"} maxW={"3xl"}></Text>
+        <Text color={"gray.500"} maxW={"3xl"}>
+          A multi-faceted website that will help regulate the crowdflow in IITH.
+          As proof of concept, this version allows users to remotely order food
+          from the canteen as well as check the status of the crowdflow in the
+          badminton court.
+        </Text>
         <Stack spacing={6} direction={"row"}>
           <Button
             rounded={"full"}
@@ -37,6 +42,9 @@ export default function CallToActionWithIllustration() {
             colorScheme={"orange"}
             bg={"orange.400"}
             _hover={{ bg: "orange.500" }}
+            onClick={() => {
+              window.location.href = "http://localhost:3000/order";
+            }}
           >
             Get started
           </Button>

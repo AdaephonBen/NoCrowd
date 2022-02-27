@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -21,9 +22,27 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import React, { useState, useEffect } from "react";
+
+const values = [
+  5, 6, 5, 6, 5, 5, 6, 7, 5, 6, 6, 6, 5, 6, 6, 6, 7, 8, 7, 7, 6, 6, 6, 6, 5, 6,
+  6, 6, 5, 5, 6, 6, 7, 6, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 7, 7, 7, 6, 5, 5,
+  6, 6, 6, 6, 5, 5, 6, 6, 6, 7, 7, 7, 6, 6, 5, 5, 6, 5, 5, 5, 6, 6, 5, 6, 6, 7,
+  6, 5, 6, 6, 7, 7, 5, 6, 7, 8, 7, 6, 6, 6, 5, 6, 6, 6, 7, 6, 6, 7, 6, 6, 6, 5,
+  5, 6, 7, 7, 5, 6, 6, 7, 6, 7, 6, 6, 7, 6, 5, 6, 6, 7, 6, 5, 6, 7, 7, 7, 5, 6,
+  7, 7, 7, 7, 7, 6, 7,
+];
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const [badmintonCourt, setBadmintonCourt] = useState(0);
+  useEffect(() => {
+    setTimeout(function () {
+      setBadmintonCourt(
+        (badmintonCourt) => (badmintonCourt + 1) % values.length
+      );
+    }, 1000);
+  }, [badmintonCourt]);
 
   return (
     <Box>
@@ -73,6 +92,9 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
+          <Badge margin="auto" colorScheme="green" padding="10px">
+            Badminton Court: {values[badmintonCourt]}
+          </Badge>
           <Button
             display={{ base: "none", md: "inline-flex" }}
             fontSize={"sm"}
@@ -82,6 +104,9 @@ export default function WithSubnavigation() {
             href={"#"}
             _hover={{
               bg: "orange.500",
+            }}
+            onClick={() => {
+              window.location.href = "http://localhost:3000/order";
             }}
           >
             Place your order

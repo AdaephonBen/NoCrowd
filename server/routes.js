@@ -67,4 +67,16 @@ router.post("/status", async (req, res) => {
   res.send({ orderstatus, rid });
 });
 
+router.post("/caterer", async (req, res) => {
+  return await db.getOrders();
+});
+
+router.post("/confirm", async (req, res) => {
+  await db.setOrderConfirmed(req.body.order_id);
+});
+
+router.post("/cancel", async (req, res) => {
+  await db.setOrderCancelled(req.body.order_id);
+});
+
 module.exports = router;
